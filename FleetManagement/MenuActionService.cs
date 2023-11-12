@@ -8,7 +8,12 @@ namespace FleetManagement
 {
     public  class MenuActionService
     {
-        private List<MenuAction> menuActions = new List<MenuAction>(); 
+        private List<MenuAction> menuActions; 
+
+        public MenuActionService()
+        {
+            menuActions = new List<MenuAction>();
+        }
 
         public void AddNewAction(int id, string name, string menuName)
         {

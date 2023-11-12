@@ -11,31 +11,4 @@ with the use of SQL database.
 (All of this application will initially be for own development of skills in programming, thus educational purposes,
 but further development for commercial purposes or as an open source project is not excluded). )
 
-But let's get back to the beginning,
-
-Options we initially want to introduce in the console version :
-
-
-For now, we will create a simple menu based on a few functions: 
-1) Adding a vehicle (creating it)
-2) Deleting a vehicle
-3) Displaying the fleet status
-4) Return vehicle lists based on a predefined filter
-
-1a) Selecting the vehicle type
-1b) Adding vehicle details
-
-2a) Entering the ID or registration plate of the vehicle
-2b) Vehicle will be deleted
-
-3a) Querying the vehicle ID 
-3b) Displaying all information about the vehicle
-
-4a) Entering the vehicle type
-5a) Calling up a list of vehicles of a given type
-
-
-
-
-
 (to be continued soon)

@@ -1,0 +1,29 @@
+﻿Here we will try to publish current progress, options that may be important for further development, etc. : 
+
+
+Options we initially want to introduce in the console version :
+
+Stage 1 -> Using the example from Kajetan's course :
+- An initial skeleton of the project will be created 
+  ( which will be developed over time and take on its own character and independent development.)
+
+In the 1 stage, our goal will be : 
+* Create a simple menu based on a few functions: 
+1) Adding a vehicle
+2) Deleting a vehicle
+3) Displaying information about a specific vehicle
+4) Return vehicle lists based on a predefined filter
+
+1a) Selecting the vehicle type
+1b) Adding vehicle details
+
+2a) Entering the ID or registration plate of the vehicle
+2b) Vehicle will be deleted
+
+3a) Querying the vehicle ID 
+3b) Displaying all information about the vehicle
+
+4a) Entering the vehicle type
+5a) Calling up a list of vehicles of a given type
+
+(to be continued soon)
