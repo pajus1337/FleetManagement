@@ -48,7 +48,6 @@ namespace FleetManagement
             vehicle.Id = highestId + 1;
 
             Vehicles.Add(vehicle);
-
             Console.WriteLine($"New vehicle with ID number : {vehicle.Id}\nType : {Enum.GetName(typeof(VehicleType), (vehicle.TypeID))}\nhas been successfully added");
 
             return vehicle.Id;
@@ -110,9 +109,14 @@ namespace FleetManagement
                     break;
                 }
             }
+
+            if (!Vehicles.Contains(vehicleToShow))
+            {
+                Console.WriteLine($"There is no vehicle with ID {vehicleIdToGetDetail} in the database :");
+                return;
+            }
             Console.WriteLine($"Selected Vehicle with ID : {vehicleToShow.Id}.\nIs a vehicle of type : {Enum.GetName(typeof(VehicleType), vehicleToShow.TypeID)}");
             Console.WriteLine($"Has a license plate: {vehicleToShow.VehicleLicensePlate}");
-
         }
 
         public int VehicleTypeIdSelectionView(MenuActionService actionService)
@@ -125,11 +129,9 @@ namespace FleetManagement
                 Console.WriteLine($"{FindByTypeMenu[i].Id}. {FindByTypeMenu[i].Name}");
             }
             ConsoleKeyInfo chosenVehicleTypeId = Console.ReadKey(true);
-
             int.TryParse(chosenVehicleTypeId.KeyChar.ToString(), out vehiclesTypeIdToView);
 
             return vehiclesTypeIdToView;
-
         }
 
         public void VehiclesByTypedIdView(int vehicleTypeId)

@@ -30,6 +30,7 @@ In the 1 stage, our goal will be :
 Stage 1 - Part II
 - Work on UI to improve UX ( Done for stage 1 level)
 - Automatic ID assignment has been created ( Done for stage 1 level)
+- Improvements in relation to the vadilation of functions ( Done for stage 1 level)
 
 
 
