@@ -11,4 +11,5 @@ with the use of SQL database.
 (All of this application will initially be for own development of skills in programming, thus educational purposes,
 but further development for commercial purposes or as an open source project is not excluded). )
 
+
 (to be continued soon)

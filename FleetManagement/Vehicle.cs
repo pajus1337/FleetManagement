@@ -14,3 +14,4 @@ namespace FleetManagement
         public int TypeID { get; set; }
     }
 }
+

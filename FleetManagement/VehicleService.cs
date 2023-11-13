@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Channels;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace FleetManagement
 {
@@ -20,7 +13,9 @@ namespace FleetManagement
 
         public ConsoleKeyInfo AddNewVehicleView(MenuActionService actionService)
         {
-            var addNewVehicleMenu = actionService.GetMenuActionByMenuName("AddNewVehicleMenu");
+            Console.Clear();
+            Console.WriteLine("Select the type of vehicle you want to add :");
+            List<MenuAction> addNewVehicleMenu = actionService.GetMenuActionByMenuName("AddNewVehicleMenu");
             for (int i = 0; i < addNewVehicleMenu.Count; i++)
             {
                 Console.WriteLine($"{addNewVehicleMenu[i].Id}. {addNewVehicleMenu[i].Name}");
@@ -34,34 +29,40 @@ namespace FleetManagement
         {
             Vehicle vehicle = new Vehicle();
             int vehicleTypeId;
-            int vehicleId;
+            int highestId;
             string vehicleLicensPlate = string.Empty;
 
+            // Linq Check for last highest Id value
+            highestId = Vehicles.Any() ? Vehicles.Max(x => x.Id) : 0;
+
+            Console.WriteLine($"The selected vehicle type is : {Enum.GetName(typeof(VehicleType), (int)char.GetNumericValue(vehicleType))}");
             int.TryParse(vehicleType.ToString(), out vehicleTypeId);           
-            Console.WriteLine("Please enter the ID for new vehicle");
-            string Id = Console.ReadLine();
-            int.TryParse(Id, out vehicleId);
 
             while (string.IsNullOrWhiteSpace(vehicleLicensPlate))
             {
                 Console.WriteLine("Enter license plate"); 
                 vehicleLicensPlate = Console.ReadLine();
             }
-
             vehicle.TypeID = vehicleTypeId;
             vehicle.VehicleLicensePlate = vehicleLicensPlate;
-            vehicle.Id = vehicleId;
+            vehicle.Id = highestId + 1;
 
             Vehicles.Add(vehicle);
-            return vehicleId;
+
+            Console.WriteLine($"New vehicle with ID number : {vehicle.Id}\nType : {Enum.GetName(typeof(VehicleType), (vehicle.TypeID))}\nhas been successfully added");
+
+            return vehicle.Id;
         }
 
         public int RemoveVehicleView()
         {
             int vehicleIdToRemove;
             Console.WriteLine("Please enter the ID for the vehicle you want to remove.");
-            ConsoleKeyInfo vehicleId = Console.ReadKey();
-            int.TryParse(vehicleId.KeyChar.ToString(), out vehicleIdToRemove);
+            string userKeyboardInputID = Console.ReadLine();
+            if (!int.TryParse(userKeyboardInputID, out vehicleIdToRemove))
+            {
+                Console.WriteLine("The ID should consist only of digits");
+            }
 
             return vehicleIdToRemove;
         }
@@ -69,15 +70,23 @@ namespace FleetManagement
         public void RemoveVehicle(int vehicleIdToRemove)
         {
             Vehicle vehicleToRemove = new();
+
             foreach (Vehicle vehicle in Vehicles)
             {
                 if (vehicle.Id == vehicleIdToRemove)
                 {
-                    vehicleToRemove= vehicle;
+                    vehicleToRemove = vehicle;
                     break;
                 }
             }
+
+            if (!Vehicles.Contains(vehicleToRemove) )
+            {
+                Console.WriteLine($"There is no vehicle with ID {vehicleIdToRemove} in the database : ");
+                return;
+            }
             Vehicles.Remove(vehicleToRemove);
+            Console.WriteLine($"Vehicle with ID {vehicleToRemove.Id} - Has been successfully deleted from the database.");
         }
 
         public int VehicleDetailSelectionView()
@@ -106,28 +115,38 @@ namespace FleetManagement
 
         }
 
-        public int VehicleTypeSelectionView()
+        public int VehicleTypeIdSelectionView(MenuActionService actionService)
         {
-            int vehicleIdToDetailView;
+            int vehiclesTypeIdToView;
             Console.WriteLine("Please enter the type ID of the vehicle type.");
-            ConsoleKeyInfo vehicleId = Console.ReadKey();
-            int.TryParse(vehicleId.KeyChar.ToString(), out vehicleIdToDetailView);
+            List<MenuAction> FindByTypeMenu = actionService.GetMenuActionByMenuName("FindByTypeMenu");
+            for (int i = 0; i < FindByTypeMenu.Count; i++)
+            {
+                Console.WriteLine($"{FindByTypeMenu[i].Id}. {FindByTypeMenu[i].Name}");
+            }
+            ConsoleKeyInfo chosenVehicleTypeId = Console.ReadKey(true);
 
-            return vehicleIdToDetailView;
+            int.TryParse(chosenVehicleTypeId.KeyChar.ToString(), out vehiclesTypeIdToView);
+
+            return vehiclesTypeIdToView;
 
         }
 
         public void VehiclesByTypedIdView(int vehicleTypeId)
         {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine($"| Veh. ID | Veh. Type | License plate |");
+
             List<Vehicle> vehiclesByType = new List<Vehicle>();
             foreach (Vehicle vehicle in Vehicles)
             {
                 if (vehicle.TypeID == vehicleTypeId)
                 {
                     vehiclesByType.Add(vehicle);
+                    builder.AppendLine($"|{vehicle.Id,9}|{Enum.GetName(typeof(VehicleType),vehicle.TypeID),11}|{vehicle.VehicleLicensePlate, 15}|");
                 }
             }
-            // Add display by type ID of vehicels in the table or some other way.
+            Console.WriteLine(builder);
         }
     }
 }

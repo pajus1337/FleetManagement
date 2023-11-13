@@ -7,23 +7,30 @@ Stage 1 -> Using the example from Kajetan's course :
 - An initial skeleton of the project will be created 
   ( which will be developed over time and take on its own character and independent development.)
 
-In the 1 stage, our goal will be : 
+In the 1 stage, our goal will be :
 * Create a simple menu based on a few functions: 
 1) Adding a vehicle
 2) Deleting a vehicle
 3) Displaying information about a specific vehicle
 4) Return vehicle lists based on a predefined filter
 
-1a) Selecting the vehicle type
-1b) Adding vehicle details
+1a) Selecting the vehicle type ( done )
+1b) Adding vehicle details ( done )
 
-2a) Entering the ID or registration plate of the vehicle
-2b) Vehicle will be deleted
+2a) Entering the ID or registration plate of the vehicle ( Done only for ID part )
+2b) Vehicle will be deleted ( done )
 
-3a) Querying the vehicle ID 
-3b) Displaying all information about the vehicle
+3a) Querying the vehicle ID ( done )
+3b) Displaying all information about the vehicle ( done )
 
-4a) Entering the vehicle type
-5a) Calling up a list of vehicles of a given type
+4a) Entering the vehicle type ( done )
+5a) Calling up a list of vehicles of a given type ( done )
+
+
+Stage 1 - Part II
+- Work on UI to improve UX ( Done for stage 1 level)
+- Automatic ID assignment has been created ( Done for stage 1 level)
+
+
 
 (to be continued soon)

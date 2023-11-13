@@ -1,4 +1,6 @@
-﻿namespace FleetManagement
+﻿using System.Runtime.CompilerServices;
+
+namespace FleetManagement
 {
     internal class Program
     {
@@ -24,7 +26,12 @@
                 {
                     case '1':
                         ConsoleKeyInfo consoleKey = vehicleService.AddNewVehicleView(actionService);
-                        int vehicleIdOnCreate = vehicleService.AddNewVehicle(consoleKey.KeyChar);
+                        int vehicleIdOnCreate; // without use, for now
+                        if (actionService.ChosenOptionExist("AddNewVehicleMenu", (int)char.GetNumericValue(consoleKey.KeyChar)))
+                        {
+                            vehicleIdOnCreate = vehicleService.AddNewVehicle(consoleKey.KeyChar);
+                            break;
+                        }
                         break;
                     case '2':
                         int vehicleIdToRemove = vehicleService.RemoveVehicleView();
@@ -35,8 +42,12 @@
                         vehicleService.VehicleDetailView(vehicleIdToGetDetail);
                         break;
                     case '4':
-                        int vehicleTypeId = vehicleService.VehicleTypeSelectionView();
-                        vehicleService.VehiclesByTypedIdView(vehicleTypeId);
+                        int vehicleTypeId = vehicleService.VehicleTypeIdSelectionView(actionService);
+                        if (actionService.ChosenOptionExist("FindByTypeMenu", vehicleTypeId))
+                        {
+                            vehicleService.VehiclesByTypedIdView(vehicleTypeId);
+                            break;
+                        }
                         break;
                     case '0':
                         Environment.Exit(0);
@@ -61,7 +72,11 @@
             actionService.AddNewAction(2, "Bus", "AddNewVehicleMenu");
             actionService.AddNewAction(3, "Truck", "AddNewVehicleMenu");
             actionService.AddNewAction(4, "Trailer", "AddNewVehicleMenu");
-            actionService.AddNewAction(0, "Terminate the program", "AddNewVehicleMenu");
+
+            actionService.AddNewAction(1, $"{Enum.GetName(typeof(VehicleType), 1)}", "FindByTypeMenu");
+            actionService.AddNewAction(2, $"{Enum.GetName(typeof(VehicleType), 2)}", "FindByTypeMenu");
+            actionService.AddNewAction(3, $"{Enum.GetName(typeof(VehicleType), 3)}", "FindByTypeMenu");
+            actionService.AddNewAction(4, $"{Enum.GetName(typeof(VehicleType), 4)}", "FindByTypeMenu");
 
             return actionService;
         }

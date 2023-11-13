@@ -33,5 +33,19 @@ namespace FleetManagement
             }
             return result;
         }
+
+        public bool ChosenOptionExist(string menuName, int chosenOption)
+        {
+            List<MenuAction> result = new List<MenuAction>();
+            foreach (MenuAction menuAction in menuActions)
+            {
+                if (chosenOption == menuAction.Id && menuAction.MenuName == menuName)
+                {
+                    return true;
+                }
+            }
+            Console.WriteLine("A menu item was selected that does not exist");
+            return false;
+        }
     }
 }
