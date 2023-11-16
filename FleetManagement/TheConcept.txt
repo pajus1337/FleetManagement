@@ -1,15 +1,25 @@
-﻿The Concept and application development log.
+﻿The concept of this application :
 
-The concept of this application, as the name suggests, will be : Fleet management, 
-in the initial phase we will focus on :
-- trucks
-- cars
+The main goal of Fleet Management will be to manage a larger number of vehicles (a fleet) to provide the best possible insight. 
 
-We will create a simple console application in the early stages, but also slowly creating an advanced application backend that will be accessible via http and mobile apps in the final stage
-with the use of SQL database.
-( based on known and good practices, which we will gradually introduce during the development of the application under the guidance of mentors from the DotNet school. 
-(All of this application will initially be for own development of skills in programming, thus educational purposes,
-but further development for commercial purposes or as an open source project is not excluded). )
+As the number of vehicles increases, it is often challenging to keep track of everything throughout the year, including:
 
+   - Inspections
+   - First aid kits (which need regular replacement)
+   - The ability to report faults that then need to be managed somehow, and also keep an eye on the progress of repairs 
+    (whether they have been fixed, when, etc.).
+    ... <and this list will continue to grow>
 
-(to be continued soon)
+Because there are a multitude of different items and things that need constant monitoring, 
+it's certainly beneficial to have everything organized, especially with a larger number of vehicles. 
+Moreover, if the system can inform us about upcoming service dates or the need for replacement,or report any issues that need to be forwarded to the workshop,
+it will give us more time for much more productive tasks. Our work will become more efficient.
+
+These are just some of the assumptions that we plan to implement in the initial version of our application. 
+As I have noticed, our list of available options will constantly expand.
+
+The ultimate goal is to introduce a feature-rich, reliable, and practical fleet management system, accessible via the web, desktop, or mobile app.
+This is an additional advantage in terms of easy access and the most practical way to use the application,
+whether in the office, workshop, or even when dealing directly with the vehicle.
+
+Follow us and become part of the development of our application through its usage, active development, or contributions of a different way.

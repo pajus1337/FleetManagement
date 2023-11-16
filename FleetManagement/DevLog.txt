@@ -32,6 +32,18 @@ Stage 1 - Part II
 - Automatic ID assignment has been created ( Done for stage 1 level)
 - Improvements in relation to the vadilation of functions ( Done for stage 1 level)
 
+** From now on, we slightly change the form of communication in the log file ** 
 
+Stage 2 - Part I
+the tasks we set and simultaneously achieved:
 
-(to be continued soon)
+Refactoring the application architecture, achieved by introducing a completely new directory structure, 
+organizing the logic, implementing interfaces, and creating generic classes, along with general code improvements. 
+** These were our main objectives **
+ ----------------------------
+ * successfully accomplishe *
+ ----------------------------
+
+Moreover, over a cup of coffee, a much-improved text describing our application emerged, which will eventually serve as part of the ReadMe file. 
+Now, only quality control remains before we slowly transition to Stage 3, where we will begin implementing unit tests and more. 
+More details on that coming soon.

@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FleetManagement", "FleetManagement\FleetManagement.csproj", "{829DA415-2BEC-49BB-B2BF-D56417A68A14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FleetManagement", "FleetManagement\FleetManagement.csproj", "{829DA415-2BEC-49BB-B2BF-D56417A68A14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FleetManagement.App", "FleetManagement.App\FleetManagement.App.csproj", "{1E7A3E90-76D4-48CB-AD49-2C12D746C88A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FleetManagement.Domain", "FleetManagement.Domain\FleetManagement.Domain.csproj", "{917C6C3B-F75F-49AC-82DD-D677D6CF9740}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{829DA415-2BEC-49BB-B2BF-D56417A68A14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{829DA415-2BEC-49BB-B2BF-D56417A68A14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{829DA415-2BEC-49BB-B2BF-D56417A68A14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E7A3E90-76D4-48CB-AD49-2C12D746C88A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E7A3E90-76D4-48CB-AD49-2C12D746C88A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E7A3E90-76D4-48CB-AD49-2C12D746C88A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E7A3E90-76D4-48CB-AD49-2C12D746C88A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{917C6C3B-F75F-49AC-82DD-D677D6CF9740}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{917C6C3B-F75F-49AC-82DD-D677D6CF9740}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{917C6C3B-F75F-49AC-82DD-D677D6CF9740}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{917C6C3B-F75F-49AC-82DD-D677D6CF9740}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
