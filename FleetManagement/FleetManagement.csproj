@@ -8,12 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FleetManagement.App\FleetManagement.App.csproj" />
-    <ProjectReference Include="..\FleetManagement.Domain\FleetManagement.Domain.csproj" />
+    <Compile Remove="Helpers\**" />
+    <EmbeddedResource Remove="Helpers\**" />
+    <None Remove="Helpers\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Helpers\" />
+    <ProjectReference Include="..\FleetManagement.App\FleetManagement.App.csproj" />
+    <ProjectReference Include="..\FleetManagement.Domain\FleetManagement.Domain.csproj" />
   </ItemGroup>
 
 </Project>
