@@ -9,6 +9,9 @@ namespace FleetManagement
     {
         static void Main(string[] args)
         {
+            ListService listService = new ListService();
+            listService.Method();
+
             string version = "v0.1a";
             MenuActionService actionService = new MenuActionService();
             VehicleService vehicleService = new VehicleService();
