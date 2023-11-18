@@ -2,7 +2,6 @@
 using FleetManagement.App.Concrete;
 using FleetManagement.App.Managers;
 using FleetManagement.Domain.Entity;
-using FleetManagement.Helpers;
 
 namespace FleetManagement
 {
@@ -12,7 +11,9 @@ namespace FleetManagement
         {
             string version = "v0.1a";
             MenuActionService actionService = new MenuActionService();
-            VehicleManager vehicleManager = new VehicleManager(actionService);
+            VehicleService vehicleService = new VehicleService();
+
+            VehicleManager vehicleManager = new VehicleManager(actionService,vehicleService);
 
             Console.WriteLine($"Welcome to Fleet Management {version}");
             while (true)

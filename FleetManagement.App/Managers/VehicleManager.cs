@@ -1,4 +1,5 @@
 ﻿using FleetManagement.App.Concrete;
+using FleetManagement.App.Abstract;
 using FleetManagement.Domain.Entity;
 using System;
 using System.Collections.Generic;
@@ -12,20 +13,18 @@ namespace FleetManagement.App.Managers
     public class VehicleManager
     {
         private readonly MenuActionService _actionService;
-        private VehicleService _vehicleService;
+        private IService<Vehicle> _vehicleService;
 
-        public VehicleManager(MenuActionService actionService)
+        public VehicleManager(MenuActionService actionService, IService<Vehicle> vehicleService)
         {
             _actionService = actionService;
-            _vehicleService = new VehicleService();
+            _vehicleService = vehicleService;
         }
 
         public int AddNewVehicle()
         {
-            string vehicleLicensePlate = string.Empty;
-            Console.Clear();
-            int typeId = -1;
-
+            // Console.Clear();  // Disabled to Avoid ex. in UnitTest
+            int typeId;
             do
             {
                 Console.WriteLine("Select the type of vehicle you want to add :");
@@ -36,8 +35,9 @@ namespace FleetManagement.App.Managers
                 }
                 ConsoleKeyInfo choseOperation = Console.ReadKey(true);
                 int.TryParse(choseOperation.KeyChar.ToString(), out typeId);
-            } while (!_actionService.ChosenOptionExist("AddNewVehicleMenu", typeId) && (typeId != -1));
+            } while (!_actionService.ChosenOptionExist("AddNewVehicleMenu", typeId));
 
+            string vehicleLicensePlate = string.Empty;
             while (string.IsNullOrWhiteSpace(vehicleLicensePlate))
             {
                 Console.WriteLine("Enter license plate");
@@ -53,12 +53,11 @@ namespace FleetManagement.App.Managers
 
         public void RemoveVehicle()
         {
+            Console.WriteLine("Please enter the ID for the vehicle you want to remove.");
+            string userKeyboardInputID = string.Empty;
+            userKeyboardInputID = Console.ReadLine();
             Vehicle vehicleToRemove = new Vehicle();
             int vehicleIdToRemove;
-            string userKeyboardInputID = string.Empty;
-
-            Console.WriteLine("Please enter the ID for the vehicle you want to remove.");
-            userKeyboardInputID = Console.ReadLine();
             if (!int.TryParse(userKeyboardInputID, out vehicleIdToRemove))
             {
                 Console.WriteLine("The ID should consist only of digits");
@@ -81,12 +80,11 @@ namespace FleetManagement.App.Managers
 
         public void ShowVehicleDetail()
         {
-            Vehicle vehicleToShow = new Vehicle();
-            string userKeyboardInput = string.Empty;
-            int vehicleIdToShowDetail;
-
             Console.WriteLine("Please enter the ID of the vehicle you want to display details for.");
+            string userKeyboardInput = string.Empty;
             userKeyboardInput = Console.ReadLine();
+            int vehicleIdToShowDetail;
+            Vehicle vehicleToShow = new Vehicle();
             if (!int.TryParse(userKeyboardInput, out vehicleIdToShowDetail))
             {
                 Console.WriteLine("The ID should consist only of digits");
@@ -116,10 +114,7 @@ namespace FleetManagement.App.Managers
 
         public void ShowVehiclesOfCategory()
         {
-            List<Vehicle> vehiclesByType = new List<Vehicle>();
-            StringBuilder builder = new StringBuilder();
-            int vehiclesTypeIdToView = -1;
-
+            int vehiclesTypeIdToView;
             do
             {
             Console.WriteLine("Please enter the type ID of the vehicle type.");
@@ -131,8 +126,10 @@ namespace FleetManagement.App.Managers
             ConsoleKeyInfo chosenVehicleTypeId = Console.ReadKey(true);
 
             int.TryParse(chosenVehicleTypeId.KeyChar.ToString(), out vehiclesTypeIdToView);
-            } while (!_actionService.ChosenOptionExist("FindByTypeMenu", vehiclesTypeIdToView) && (vehiclesTypeIdToView != -1));
+            } while (!_actionService.ChosenOptionExist("FindByTypeMenu", vehiclesTypeIdToView));
 
+            StringBuilder builder = new StringBuilder();
+            List<Vehicle> vehiclesByType = new List<Vehicle>();
             builder.AppendLine($"| Veh. ID | Veh. Type | License plate |");
             foreach (Vehicle vehicle in _vehicleService.Items)
             {
@@ -150,6 +147,12 @@ namespace FleetManagement.App.Managers
             {
                 Console.WriteLine(builder);
             }
+        }
+
+        public Vehicle GetVehicleById(int id)
+        {
+            var vehicle = _vehicleService.GetItemByID(id);
+            return vehicle;
         }
     }
 }

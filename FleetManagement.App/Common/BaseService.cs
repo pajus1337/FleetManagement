@@ -11,7 +11,6 @@ namespace FleetManagement.App.Common
     public class BaseService<T> : IService<T> where T : BaseEntity
     {
         public List<T> Items { get; set; }
-        public T GenericItem { get; set; }
 
         public BaseService()
         {
@@ -55,6 +54,12 @@ namespace FleetManagement.App.Common
                 entity = item;
             }
             return entity.Id;
+        }
+
+        public T GetItemByID(int id)
+        {
+            var entity = Items.FirstOrDefault(p => p.Id == id);
+            return entity;           
         }
     }
 }

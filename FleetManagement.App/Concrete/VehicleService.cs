@@ -6,11 +6,5 @@ namespace FleetManagement.App.Concrete
 {
     public class VehicleService : BaseService<Vehicle>
     {
-        public List<Vehicle> Vehicles { get; set; }
-
-        public VehicleService()
-        {
-            Vehicles = new List<Vehicle>();
-        }
     }
 }

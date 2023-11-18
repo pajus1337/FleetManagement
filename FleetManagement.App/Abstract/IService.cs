@@ -11,6 +11,8 @@ namespace FleetManagement.App.Abstract
         List<T> Items { get; set; }
 
         List<T> GetAllItems();
+        int GetLastId();
+        T GetItemByID(int id);
         int AddItem(T item);
         int UpdateItem(T item);
         void RemoveItem(T item);

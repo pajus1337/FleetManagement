@@ -9,8 +9,8 @@ namespace FleetManagement.Domain.Entity
     public enum VehicleType
     {
         Car = 1,
-        Bus,
-        Truck,
-        Trailer,
+        Bus = 2,
+        Truck = 3,
+        Trailer = 4,
     }
 }
