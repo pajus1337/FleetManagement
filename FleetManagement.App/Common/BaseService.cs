@@ -17,6 +17,12 @@ namespace FleetManagement.App.Common
             Items = new List<T>();
         } 
 
+        public string SerializeListToStringInJsonFormat()
+        {
+            string serializedList = JsonSerializer.Serialize(Items);
+            return serializedList;
+        }
+
         public int GetLastId()
         {
             int lastId;
