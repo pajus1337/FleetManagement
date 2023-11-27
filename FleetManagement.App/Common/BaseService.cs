@@ -18,7 +18,7 @@ namespace FleetManagement.App.Common
             Items = new List<T>();
         }
 
-        public string SerializeListToStringInJsonStyle()
+        public string SerializeListToStringInJsonFormat()
         {
             string serializedList = JsonSerializer.Serialize(Items);
             return serializedList;
