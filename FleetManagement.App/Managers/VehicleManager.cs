@@ -13,6 +13,7 @@ namespace FleetManagement.App.Managers
     public class VehicleManager
     {
         private readonly MenuActionService _actionService;
+
         private IService<Vehicle> _vehicleService;
 
         public VehicleManager(MenuActionService actionService, IService<Vehicle> vehicleService)

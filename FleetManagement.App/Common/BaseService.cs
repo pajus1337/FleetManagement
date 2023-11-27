@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace FleetManagement.App.Common
@@ -15,7 +16,13 @@ namespace FleetManagement.App.Common
         public BaseService()
         {
             Items = new List<T>();
-        } 
+        }
+
+        public string SerializeListToStringInJsonStyle()
+        {
+            string serializedList = JsonSerializer.Serialize(Items);
+            return serializedList;
+        }
 
         public int GetLastId()
         {
