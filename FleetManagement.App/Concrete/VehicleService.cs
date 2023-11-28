@@ -6,5 +6,6 @@ namespace FleetManagement.App.Concrete
 {
     public class VehicleService : BaseService<Vehicle>
     {
+
     }
 }

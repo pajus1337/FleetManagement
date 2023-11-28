@@ -20,6 +20,7 @@ namespace FleetManagement.App.Managers
         {
             _actionService = actionService;
             _vehicleService = vehicleService;
+            _vehicleService.ReadDataFromJsonFileToList();
         }
 
         public int AddNewVehicle()
@@ -52,10 +53,7 @@ namespace FleetManagement.App.Managers
             _vehicleService.AddItem(vehicle);
             Console.WriteLine($"New vehicle with ID number : {vehicle.Id}\nType : {Enum.GetName(typeof(VehicleType), (vehicle.TypeId))}\nhas been successfully added");
 
-
-            // !! Test only
-            _vehicleService.SerializeListToStringInJsonFormat(); // Test only
-
+            _vehicleService.SaveSerializedStringInJsonToAFile(_vehicleService.SerializeListToStringInJsonFormat()); // Test only
 
             return vehicle.Id;
         }
@@ -78,6 +76,7 @@ namespace FleetManagement.App.Managers
             {
                 _vehicleService.RemoveItem(vehicleToRemove);
                 Console.WriteLine($"Vehicle with ID {vehicleToRemove.Id} - Has been successfully deleted from the database.");
+                _vehicleService.SaveSerializedStringInJsonToAFile(_vehicleService.SerializeListToStringInJsonFormat());
             }
             else
             {
@@ -128,23 +127,14 @@ namespace FleetManagement.App.Managers
             } while (!_actionService.ChosenOptionExist(FindByTypeMenu, vehiclesTypeIdToView));
 
             StringBuilder builder = new StringBuilder();
-
             List<Vehicle> vehiclesByType = _vehicleService.GetItemsByTypeId(vehiclesTypeIdToView);
-
             builder.AppendLine($"| Veh. ID | Veh. Type | License plate |");
             foreach (Vehicle vehicle in vehiclesByType)
             {
                     builder.AppendLine($"|{vehicle.Id,9}|{Enum.GetName(typeof(VehicleType), vehicle.TypeId),11}|{vehicle.VehicleLicensePlate,15}|");
             }
 
-            if (vehiclesByType.Count == 0)
-            {
-                Console.WriteLine("There are no vehicles in the selected category");
-            }
-            else
-            {
-                Console.WriteLine(builder);
-            }
+            Console.WriteLine(vehiclesByType.Count == 0 ? "There are no vehicles in the selected category" : builder); 
         }
 
         public Vehicle GetVehicleById(int id)

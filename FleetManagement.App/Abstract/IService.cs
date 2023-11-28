@@ -19,7 +19,9 @@ namespace FleetManagement.App.Abstract
         void RemoveItem(T item);
 
         // TODO: moving this method to a separate interface in the future
-        string SerializeListToStringInJsonFormat(); 
+        string SerializeListToStringInJsonFormat();
+        public void SaveSerializedStringInJsonToAFile(string serializedFormatJson);
+        public void ReadDataFromJsonFileToList();
 
     }
 }

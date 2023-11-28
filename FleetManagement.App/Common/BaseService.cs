@@ -1,15 +1,9 @@
 ﻿using FleetManagement.App.Abstract;
 using FleetManagement.Domain.Common;
-using System.Text.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using System.Xml;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 using FleetManagement.App.Concrete;
+using System.Text.Json;
+using System.Numerics;
+using FleetManagement.Domain.Entity;
 
 namespace FleetManagement.App.Common
 {
@@ -20,6 +14,7 @@ namespace FleetManagement.App.Common
         public BaseService()
         {
             Items = new List<T>();
+
         }
 
         public int GetLastId()
@@ -52,8 +47,8 @@ namespace FleetManagement.App.Common
         }
         
         public List<T> GetItemsByTypeId(int typeId)
-        {
-            return new(Items.Where(p => p.Id == typeId).ToList());
+        {   
+            return new(Items.Where(p => p.TypeId == typeId).ToList());
         }
 
         public int UpdateItem(T item)
@@ -76,6 +71,20 @@ namespace FleetManagement.App.Common
         {
             string serializedList = JsonSerializer.Serialize(Items, new JsonSerializerOptions { WriteIndented = true });
             return serializedList;
+        }
+
+        public void SaveSerializedStringInJsonToAFile(string serializedFormatJson)
+        {
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string fileName = "data.json";
+            File.WriteAllText($@"{basePath + fileName}", serializedFormatJson);
+        }
+
+        public void ReadDataFromJsonFileToList()
+        {
+            string fileName = "data.json";
+            string jsonString = File.ReadAllText(fileName);
+            Items = JsonSerializer.Deserialize<List<T>>(jsonString)!;            
         }
     }
 }

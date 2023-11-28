@@ -11,7 +11,6 @@ namespace FleetManagement.Domain.Entity
     public class Vehicle : BaseEntity
     {
         public string VehicleLicensePlate { get; set; }
-        public int TypeId { get; set; }
 
         public Vehicle()
         {
@@ -20,6 +19,7 @@ namespace FleetManagement.Domain.Entity
 
         public Vehicle(int id ,string vehicleLicensePlate, int typeId)
         {
+            CreatedDataTime = DateTime.Now;
             VehicleLicensePlate = vehicleLicensePlate;
             TypeId = typeId;
             Id = id;
