@@ -26,17 +26,20 @@ namespace FleetManagement.App.Managers
         {
             // Console.Clear();  // Disabled to Avoid ex. in UnitTest
             int typeId;
+             List<MenuAction> addNewVehicleMenu = _actionService.GetMenuActionByMenuName("AddNewVehicleMenu");
+
             do
             {
                 Console.WriteLine("Select the type of vehicle you want to add :");
-                List<MenuAction> addNewVehicleMenu = _actionService.GetMenuActionByMenuName("AddNewVehicleMenu");
-                for (int i = 0; i < addNewVehicleMenu.Count; i++)
+                foreach (var item in addNewVehicleMenu)
                 {
-                    Console.WriteLine($"{addNewVehicleMenu[i].Id}. {addNewVehicleMenu[i].VehicleType}");
+                    Console.WriteLine($"{item.Id}. {item.VehicleType}");
                 }
+
                 ConsoleKeyInfo choseOperation = Console.ReadKey(true);
                 int.TryParse(choseOperation.KeyChar.ToString(), out typeId);
-            } while (!_actionService.ChosenOptionExist("AddNewVehicleMenu", typeId));
+
+            } while (!_actionService.ChosenOptionExist(addNewVehicleMenu, typeId));
 
             string vehicleLicensePlate = string.Empty;
             while (string.IsNullOrWhiteSpace(vehicleLicensePlate))
@@ -49,6 +52,11 @@ namespace FleetManagement.App.Managers
             _vehicleService.AddItem(vehicle);
             Console.WriteLine($"New vehicle with ID number : {vehicle.Id}\nType : {Enum.GetName(typeof(VehicleType), (vehicle.TypeId))}\nhas been successfully added");
 
+
+            // !! Test only
+            _vehicleService.SerializeListToStringInJsonFormat(); // Test only
+
+
             return vehicle.Id;
         }
 
@@ -59,24 +67,22 @@ namespace FleetManagement.App.Managers
             userKeyboardInputID = Console.ReadLine();
             Vehicle vehicleToRemove = new Vehicle();
             int vehicleIdToRemove;
+
             if (!int.TryParse(userKeyboardInputID, out vehicleIdToRemove))
             {
                 Console.WriteLine("The ID should consist only of digits");
             }
-            foreach (Vehicle vehicle in _vehicleService.Items)
+
+            vehicleToRemove = _vehicleService.GetItemByID(vehicleIdToRemove);
+            if (vehicleToRemove != null)
             {
-                if (vehicle.Id == vehicleIdToRemove)
-                {
-                    vehicleToRemove = vehicle;
-                    break;
-                }
+                _vehicleService.RemoveItem(vehicleToRemove);
+                Console.WriteLine($"Vehicle with ID {vehicleToRemove.Id} - Has been successfully deleted from the database.");
             }
-            if (!_vehicleService.Items.Contains(vehicleToRemove))
+            else
             {
                 Console.WriteLine($"There is no vehicle with ID {vehicleIdToRemove} in the database : ");
             }
-            _vehicleService.RemoveItem(vehicleToRemove);
-            Console.WriteLine($"Vehicle with ID {vehicleToRemove.Id} - Has been successfully deleted from the database.");
         }
 
         public void ShowVehicleDetail()
@@ -91,55 +97,46 @@ namespace FleetManagement.App.Managers
                 Console.WriteLine("The ID should consist only of digits");
                 return;
             }
+
+            vehicleToShow = _vehicleService.GetItemByID(vehicleIdToShowDetail);
+            if (vehicleToShow != null)
+            {
+                Console.WriteLine($"Selected Vehicle with ID : {vehicleToShow.Id}.\nIs a vehicle of type : {Enum.GetName(typeof(VehicleType), vehicleToShow.TypeId)}");
+                Console.WriteLine($"Has a license plate: {vehicleToShow.VehicleLicensePlate}");
+            }
             else
             {
-                foreach (Vehicle vehicle in _vehicleService.Items)
-                {
-                    if (vehicle.Id == vehicleIdToShowDetail)
-                    {
-                        vehicleToShow = vehicle;
-                        break;
-                    }
-                }
-                if (!_vehicleService.Items.Contains(vehicleToShow))
-                {
-                    Console.WriteLine($"There is no vehicle with ID {vehicleIdToShowDetail} in the database :");
-                }
-                else
-                {
-                    Console.WriteLine($"Selected Vehicle with ID : {vehicleToShow.Id}.\nIs a vehicle of type : {Enum.GetName(typeof(VehicleType), vehicleToShow.TypeId)}");
-                    Console.WriteLine($"Has a license plate: {vehicleToShow.VehicleLicensePlate}");
-                }
+                Console.WriteLine($"There is no vehicle with ID {vehicleIdToShowDetail} in the database :");
             }
         }
 
         public void ShowVehiclesOfCategory()
         {
             int vehiclesTypeIdToView;
+            List<MenuAction> FindByTypeMenu = _actionService.GetMenuActionByMenuName("FindByTypeMenu");
             do
             {
-            Console.WriteLine("Please enter the type ID of the vehicle type.");
-            List<MenuAction> FindByTypeMenu = _actionService.GetMenuActionByMenuName("FindByTypeMenu");
-            for (int i = 0; i < FindByTypeMenu.Count; i++)
-            {
-                Console.WriteLine($"{FindByTypeMenu[i].Id}. {FindByTypeMenu[i].VehicleType}");
-            }
-            ConsoleKeyInfo chosenVehicleTypeId = Console.ReadKey(true);
+                Console.WriteLine("Please enter the type ID of the vehicle type.");
+                
+                for (int i = 0; i < FindByTypeMenu.Count; i++)
+                {
+                    Console.WriteLine($"{FindByTypeMenu[i].Id}. {FindByTypeMenu[i].VehicleType}");
+                }
+                ConsoleKeyInfo chosenVehicleTypeId = Console.ReadKey(true);
 
-            int.TryParse(chosenVehicleTypeId.KeyChar.ToString(), out vehiclesTypeIdToView);
-            } while (!_actionService.ChosenOptionExist("FindByTypeMenu", vehiclesTypeIdToView));
+                int.TryParse(chosenVehicleTypeId.KeyChar.ToString(), out vehiclesTypeIdToView);
+            } while (!_actionService.ChosenOptionExist(FindByTypeMenu, vehiclesTypeIdToView));
 
             StringBuilder builder = new StringBuilder();
-            List<Vehicle> vehiclesByType = new List<Vehicle>();
+
+            List<Vehicle> vehiclesByType = _vehicleService.GetItemsByTypeId(vehiclesTypeIdToView);
+
             builder.AppendLine($"| Veh. ID | Veh. Type | License plate |");
-            foreach (Vehicle vehicle in _vehicleService.Items)
+            foreach (Vehicle vehicle in vehiclesByType)
             {
-                if (vehicle.TypeId == vehiclesTypeIdToView)
-                {
-                    vehiclesByType.Add(vehicle);
                     builder.AppendLine($"|{vehicle.Id,9}|{Enum.GetName(typeof(VehicleType), vehicle.TypeId),11}|{vehicle.VehicleLicensePlate,15}|");
-                }
             }
+
             if (vehiclesByType.Count == 0)
             {
                 Console.WriteLine("There are no vehicles in the selected category");

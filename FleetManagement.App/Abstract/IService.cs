@@ -11,12 +11,16 @@ namespace FleetManagement.App.Abstract
         List<T> Items { get; set; }
 
         List<T> GetAllItems();
+        List<T> GetItemsByTypeId(int typeId);
         int GetLastId();
         T GetItemByID(int id);
         int AddItem(T item);
         int UpdateItem(T item);
         void RemoveItem(T item);
-        string SerializeListToStringInJsonFormat();
+
+        // TODO: moving this method to a separate interface in the future
+        string SerializeListToStringInJsonFormat(); 
+
     }
 }
  

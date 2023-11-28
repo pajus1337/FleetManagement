@@ -13,29 +13,31 @@ namespace FleetManagement.App.Concrete
 
         public List<MenuAction> GetMenuActionByMenuName(string menuName)
         {
-            List<MenuAction> result = new List<MenuAction>();
-            foreach (MenuAction menuAction in Items)
-            {
-                if (menuAction.MenuName == menuName)
-                {
-                    result.Add(menuAction);
-                }
-            }
-            return result;
+
+            return Items.Where<MenuAction>(menu => menu.MenuName == menuName).ToList();
+
+            //List<MenuAction> result = new List<MenuAction>();
+            //foreach (MenuAction menuAction in Items)
+            //{
+            //    if (menuAction.MenuName == menuName)
+            //    {
+            //        result.Add(menuAction);
+            //    }
+            //}
+            //return result;
         }
 
-        public bool ChosenOptionExist(string menuName, int chosenOption)
+        public bool ChosenOptionExist(List<MenuAction> menuActions, int chosenOption)
         {
-            List<MenuAction> result = new List<MenuAction>();
-            foreach (MenuAction menuAction in Items)
+            if (menuActions.Any(p => p.Id == chosenOption))
             {
-                if (chosenOption == menuAction.Id && menuAction.MenuName == menuName)
-                {
-                    return true;
-                }
+                return true;
             }
-            Console.WriteLine("A menu item was selected that does not exist");
-            return false;
+            else
+            {
+                Console.WriteLine("A menu item was selected that does not exist");
+                return false;
+            }
         }
 
         private void Initialize()

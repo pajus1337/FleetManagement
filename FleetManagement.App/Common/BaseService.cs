@@ -1,11 +1,15 @@
 ﻿using FleetManagement.App.Abstract;
 using FleetManagement.Domain.Common;
+using System.Text.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Xml;
+using JsonSerializer = System.Text.Json.JsonSerializer;
+using FleetManagement.App.Concrete;
 
 namespace FleetManagement.App.Common
 {
@@ -16,12 +20,6 @@ namespace FleetManagement.App.Common
         public BaseService()
         {
             Items = new List<T>();
-        }
-
-        public string SerializeListToStringInJsonFormat()
-        {
-            string serializedList = JsonSerializer.Serialize(Items);
-            return serializedList;
         }
 
         public int GetLastId()
@@ -52,6 +50,11 @@ namespace FleetManagement.App.Common
         {
             Items.Remove(item);
         }
+        
+        public List<T> GetItemsByTypeId(int typeId)
+        {
+            return new(Items.Where(p => p.Id == typeId).ToList());
+        }
 
         public int UpdateItem(T item)
         {
@@ -66,7 +69,13 @@ namespace FleetManagement.App.Common
         public T GetItemByID(int id)
         {
             var entity = Items.FirstOrDefault(p => p.Id == id);
-            return entity;           
+            return entity;
+        }
+
+        public string SerializeListToStringInJsonFormat()
+        {
+            string serializedList = JsonSerializer.Serialize(Items, new JsonSerializerOptions { WriteIndented = true });
+            return serializedList;
         }
     }
 }

@@ -25,12 +25,11 @@ namespace FleetManagement.Tests
             // Assert 
             Assert.IsType<Vehicle>(returnedVehicle);
             Assert.NotNull(returnedVehicle);
-            Assert.Equal(vehicle, returnedVehicle); // Sprawdza tylko czy sa rowne wartosci ale nie czy sa tymi samymi obj w pamieci.
+            Assert.Equal(vehicle, returnedVehicle); // Sprawdza tylko czy sa rowne wartosci ale nie czy sa tymi samymi obj w pamieci ??
 
             returnedVehicle.Should().BeOfType(typeof(Vehicle));
             returnedVehicle.Should().NotBeNull();
-            returnedVehicle.Should().BeSameAs(vehicle); // sprawdza tez czy sa takim samym obj. pod wzgledem referencji = ten sam obj w pamieci.
-
+            returnedVehicle.Should().BeSameAs(vehicle); // sprawdza tez czy sa takim samym obj. pod wzgledem referencji = ten sam obj w pamieci ??
         }
 
         public void Add_CheckIfCreatedVehicleIsAddedCorrectToTheList()
@@ -78,7 +77,6 @@ namespace FleetManagement.Tests
             Assert.Equal(enumValueForBus, resultBus);
             Assert.Equal(enumValueForTruck, resultTruck);
             Assert.Equal(enumValueForTrailer, resultTrailer);
-
         }
     }
 }
