@@ -13,18 +13,7 @@ public  class MenuActionService : BaseService<MenuAction>
 
     public List<MenuAction> GetMenuActionByMenuName(string menuName)
     {
-
         return Items.Where<MenuAction>(menu => menu.MenuName == menuName).ToList();
-
-        //List<MenuAction> result = new List<MenuAction>();
-        //foreach (MenuAction menuAction in Items)
-        //{
-        //    if (menuAction.MenuName == menuName)
-        //    {
-        //        result.Add(menuAction);
-        //    }
-        //}
-        //return result;
     }
 
     public bool ChosenOptionExist(List<MenuAction> menuActions, int chosenOption)

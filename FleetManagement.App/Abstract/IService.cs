@@ -9,7 +9,6 @@ namespace FleetManagement.App.Abstract;
 public interface IService<T>
 {
     List<T> Items { get; } 
-
     List<T> GetAllItems();
     List<T> GetItemsByTypeId(int typeId);
     int GetLastId();
@@ -22,5 +21,4 @@ public interface IService<T>
     string SerializeListToStringInJsonFormat();
     public void SaveSerializedStringInJsonToAFile(string serializedFormatJson);
     public void ReadDataFromJsonFileToList();
-
 }

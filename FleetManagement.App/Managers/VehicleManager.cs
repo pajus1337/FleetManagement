@@ -26,9 +26,8 @@ public class VehicleManager
 
     public int AddNewVehicle()
     {
-        // Console.Clear();  // Disabled to Avoid ex. in UnitTest
         int typeId;
-         List<MenuAction> addNewVehicleMenu = _actionService.GetMenuActionByMenuName("AddNewVehicleMenu");
+        List<MenuAction> addNewVehicleMenu = _actionService.GetMenuActionByMenuName("AddNewVehicleMenu");
 
         do
         {

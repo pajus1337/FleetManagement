@@ -35,6 +35,7 @@ public class BaseService<T> : IService<T> where T : BaseEntity
         Items.Add(item);
         return item.Id;
     }
+
     public List<T> GetAllItems()
     {
         return Items;
