@@ -83,6 +83,10 @@ namespace FleetManagement.App.Common
         public void ReadDataFromJsonFileToList()
         {
             string fileName = "data.json";
+            if (fileName != null)
+            {
+                return;
+            }
             string jsonString = File.ReadAllText(fileName);
             Items = JsonSerializer.Deserialize<List<T>>(jsonString)!;            
         }
