@@ -45,9 +45,9 @@ public class BaseService<T> : IService<T> where T : BaseEntity
     {
         Items.Remove(item);
     }
-    
+
     public List<T> GetItemsByTypeId(int typeId)
-    {   
+    {
         return new(Items.Where(p => p.TypeId == typeId).ToList());
     }
 
@@ -83,11 +83,15 @@ public class BaseService<T> : IService<T> where T : BaseEntity
     public void ReadDataFromJsonFileToList()
     {
         string fileName = "data.json";
-        if (fileName != null)
+        try
         {
+            string jsonString = File.ReadAllText(fileName);
+            Items = JsonSerializer.Deserialize<List<T>>(jsonString)!;
+        }
+        catch (FileNotFoundException ex)
+        {
+            Console.WriteLine("Warning : Database file not found");
             return;
         }
-        string jsonString = File.ReadAllText(fileName);
-        Items = JsonSerializer.Deserialize<List<T>>(jsonString)!;            
     }
 }
