@@ -3,6 +3,7 @@ using FleetManagement.App.Abstract;
 using FleetManagement.App.Concrete;
 using FleetManagement.App.Managers;
 using FleetManagement.Domain.Entity;
+using FleetManagement.Domain.Enums;
 using FluentAssertions;
 using Moq;
 

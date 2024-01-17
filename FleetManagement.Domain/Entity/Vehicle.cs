@@ -6,24 +6,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FleetManagement.Domain.Entity
+namespace FleetManagement.Domain.Entity;
+
+public class Vehicle : BaseEntity
 {
-    public class Vehicle : BaseEntity
+    public string VehicleLicensePlate { get; set; }
+
+    public Vehicle()
     {
-        public string VehicleLicensePlate { get; set; }
+        VehicleLicensePlate = string.Empty;
+    }
 
-        public Vehicle()
-        {
-            VehicleLicensePlate = string.Empty;
-        }
-
-        public Vehicle(int id ,string vehicleLicensePlate, int typeId)
-        {
-            CreatedDataTime = DateTime.Now;
-            VehicleLicensePlate = vehicleLicensePlate;
-            TypeId = typeId;
-            Id = id;
-        }
+    public Vehicle(int id ,string vehicleLicensePlate, int typeId)
+    {
+        CreatedDataTime = DateTime.Now;
+        VehicleLicensePlate = vehicleLicensePlate;
+        TypeId = typeId;
+        Id = id;
     }
 }
 

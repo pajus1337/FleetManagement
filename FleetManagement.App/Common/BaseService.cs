@@ -5,90 +5,88 @@ using System.Text.Json;
 using System.Numerics;
 using FleetManagement.Domain.Entity;
 
-namespace FleetManagement.App.Common
+namespace FleetManagement.App.Common;
+
+public class BaseService<T> : IService<T> where T : BaseEntity
 {
-    public class BaseService<T> : IService<T> where T : BaseEntity
+    public List<T> Items { get; private set; }
+
+    public BaseService()
     {
-        public List<T> Items { get; set; }
+        Items = new List<T>();
+    }
 
-        public BaseService()
+    public int GetLastId()
+    {
+        int lastId;
+        if (Items.Any())
         {
-            Items = new List<T>();
+            lastId = Items.OrderBy(p => p.Id).LastOrDefault().Id;
+        }
+        else
+        {
+            lastId = 0;
+        }
+        return lastId;
+    }
 
-        }
+    public int AddItem(T item)
+    {
+        Items.Add(item);
+        return item.Id;
+    }
+    public List<T> GetAllItems()
+    {
+        return Items;
+    }
 
-        public int GetLastId()
-        {
-            int lastId;
-            if (Items.Any())
-            {
-                lastId = Items.OrderBy(p => p.Id).LastOrDefault().Id;
-            }
-            else
-            {
-                lastId = 0;
-            }
-            return lastId;
-        }
+    public void RemoveItem(T item)
+    {
+        Items.Remove(item);
+    }
+    
+    public List<T> GetItemsByTypeId(int typeId)
+    {   
+        return new(Items.Where(p => p.TypeId == typeId).ToList());
+    }
 
-        public int AddItem(T item)
+    public int UpdateItem(T item)
+    {
+        var entity = Items.FirstOrDefault(p => p.Id == item.Id);
+        if (entity != null)
         {
-            Items.Add(item);
-            return item.Id;
+            entity = item;
         }
-        public List<T> GetAllItems()
-        {
-            return Items;
-        }
+        return entity.Id;
+    }
 
-        public void RemoveItem(T item)
-        {
-            Items.Remove(item);
-        }
-        
-        public List<T> GetItemsByTypeId(int typeId)
-        {   
-            return new(Items.Where(p => p.TypeId == typeId).ToList());
-        }
+    public T GetItemByID(int id)
+    {
+        var entity = Items.FirstOrDefault(p => p.Id == id);
+        return entity;
+    }
 
-        public int UpdateItem(T item)
-        {
-            var entity = Items.FirstOrDefault(p => p.Id == item.Id);
-            if (entity != null)
-            {
-                entity = item;
-            }
-            return entity.Id;
-        }
+    public string SerializeListToStringInJsonFormat()
+    {
+        string serializedList = JsonSerializer.Serialize(Items, new JsonSerializerOptions { WriteIndented = true });
+        return serializedList;
+    }
 
-        public T GetItemByID(int id)
-        {
-            var entity = Items.FirstOrDefault(p => p.Id == id);
-            return entity;
-        }
+    public void SaveSerializedStringInJsonToAFile(string serializedFormatJson)
+    {
+        string basePath = AppDomain.CurrentDomain.BaseDirectory;
+        string fileName = "data.json";
+        File.WriteAllText($@"{basePath + fileName}", serializedFormatJson);
+    }
 
-        public string SerializeListToStringInJsonFormat()
+    public void ReadDataFromJsonFileToList()
+    {
+        string fileName = "data.json";
+        if (fileName != null)
         {
-            string serializedList = JsonSerializer.Serialize(Items, new JsonSerializerOptions { WriteIndented = true });
-            return serializedList;
+            return;
         }
-
-        public void SaveSerializedStringInJsonToAFile(string serializedFormatJson)
-        {
-            string basePath = AppDomain.CurrentDomain.BaseDirectory;
-            string fileName = "data.json";
-            File.WriteAllText($@"{basePath + fileName}", serializedFormatJson);
-        }
-
-        public void ReadDataFromJsonFileToList()
-        {
-            string fileName = "data.json";
-            if (fileName != null)
-            {
-                return;
-            }
-            string jsonString = File.ReadAllText(fileName);
-            Items = JsonSerializer.Deserialize<List<T>>(jsonString)!;            
-        }
+        string jsonString = File.ReadAllText(fileName);
+        Items = JsonSerializer.Deserialize<List<T>>(jsonString)!;            
     }
 }
